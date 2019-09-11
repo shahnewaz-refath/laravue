@@ -151,10 +151,18 @@
           updateProfile(e){
             let file = e.target.files[0];
             let reader = new FileReader();
-            reader.onloadend = (file) => {
-              this.form.photo = reader.result;
+            if(file['size'] < 2111775){
+                reader.onloadend = (file) => {
+                this.form.photo = reader.result;
+              }
+              reader.readAsDataURL(file);
+            }else{
+              Swal.fire({
+                type:'error',
+                title:'Oops..',
+                text: 'You are uploading a large file',
+              })
             }
-            reader.readAsDataURL(file);
           }
         },
         mounted() {
